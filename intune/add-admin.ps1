@@ -16,7 +16,7 @@ function Log{
     )
 
     $file = "admin-exec.log"
-    $scriptName = $MyInvocation.ScriptName.split("\")[-1]
+    $scriptName = $PSCommandPath.split("\")[-1]
 
     try{
         .\log.ps1 "$file" "$scriptName" "$Out" 
