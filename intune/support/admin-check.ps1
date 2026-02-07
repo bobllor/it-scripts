@@ -10,13 +10,11 @@
     2/7/2026
 #>
 
-# must be split otherwise we have an escape sequence error (maybe)
-# better safe than sorry to just target the last name anyways
 $user = (get-ciminstance -class win32_computersystem).username
+# must be split due to match regex
+$userName = $user.split("\")[-1]
 
-$isAdmin = (net localgroup administrators) -contains "$user"
-
-if($isAdmin){
+if((net localgroup administrators) -match $userName){
     echo "User $user is admin"
     exit 0
 }else{
