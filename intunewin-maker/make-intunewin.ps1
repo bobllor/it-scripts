@@ -9,6 +9,9 @@
 		-SetupFile <string>
 			The target setup file.
 		
+		-RemoveIntuneWin
+			Removes all .intunewin files from the source directory before making a new .intunewin file.
+		
 	.AUTHOR
 	Tri Nguyen
 
@@ -20,7 +23,8 @@ param(
 	[Parameter(Mandatory=$true)]
 	[string] $Source,
 	[Parameter(Mandatory=$true)]
-	[string] $SetupFile
+	[string] $SetupFile,
+	[switch] $RemoveIntuneWin
 )
 
 $app = "IntuneWinAppUtil.exe"
@@ -33,6 +37,13 @@ if(!(test-path $app)){
 if(test-path $Source -pathtype Container){
 	$folderName = ($Source -split "\\")[-2]
 	$fileName = ($SetupFile -split "\\")[-1]
+
+	if($RemoveIntuneWin){
+		get-childitem -recurse -path "$Source" | where {$_.extension -eq ".intunewin"} | foreach-object{
+			echo "Removing file $($_.name)"
+			rm $_.fullname
+		}
+	}
 	
 	echo "Source: $Source"
 	echo "Setup file: $fileName"
