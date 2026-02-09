@@ -14,7 +14,7 @@ $user = (get-ciminstance -class win32_computersystem).username
 # must be split due to match regex
 $userName = $user.split("\")[-1]
 
-if((net localgroup administrators) -match $userName){
+if("$(net localgroup administrators)" -match "$userName"){
     echo "User $user is admin"
     exit 0
 }else{
