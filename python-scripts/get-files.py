@@ -5,6 +5,7 @@ import argparse as ap
 import os
 import shutil
 import uuid
+import subprocess
 
 # NOTE: these are not the exact arg types but the parsed data afterwards
 class ArgData(TypedDict):
@@ -192,6 +193,7 @@ def start_keep(arg_data: ArgData) -> tuple[bool, str]:
 
 
 if __name__ == "__main__":
+    ROOT: Path = Path(__file__).parent
     parser: ap.ArgumentParser = ap.ArgumentParser(description="creates an output folder with files to prep for win32 app creation")
 
     # core arguments
@@ -230,3 +232,19 @@ if __name__ == "__main__":
     print(msg)
     if not status:
         exit(1)
+
+    # do a dynamic file search instead of hardcoding?
+    intune_script: str = "make-intunewin.ps1"
+    intune_script_path: Path = ROOT / intune_script
+
+    # TODO: requires the following for the powershell script to run:
+    #   1. source folder (output folder from above) -> will need to change the return value for the start functions
+    #   2. setup file (need an option for a flag)
+    #   3. boolean for removeintunewin (default true, probably not going to let this be an option)
+
+    if intune_script_path.exists():
+        cmd: list[str] = ["powershell", intune_script_path]
+
+        proc: subprocess.CompletedProcess[bytes] = subprocess.run(cmd, capture_output=True)
+        stdout: str = proc.stdout.decode()
+        stderr: str = proc.stderr.decode()
