@@ -1,6 +1,6 @@
 <#
 	.DESCRIPTION
-	Creates the .intunewin file. This requires the IntuneWinAppUtil.exe executable to run.
+	Creates the .intunewin file. This requires IntuneWinAppUtil.exe in the current directory to run.
 
 	.PARAMETERS
 		-$Source <string>
@@ -14,9 +14,6 @@
 		
 	.AUTHOR
 	Tri Nguyen
-
-	.UDPATED
-	2/7/2026
 #>
 
 param(
@@ -30,7 +27,7 @@ param(
 $app = "IntuneWinAppUtil.exe"
 
 if(!(test-path $app)){
-	Write-Error "Missing $app in path $(pwd).path"
+	Write-Error "Missing $app in path $((pwd).path)"
 	exit 1
 }
 
