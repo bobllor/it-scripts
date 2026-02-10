@@ -1,5 +1,5 @@
-# About
+# IT Scripts
 
-This repository contains PowerShell scripts (and other related files) used for IT.
+IT scripts used for IT related tasks in my day-to-day both on the job or off the clock.
 
-The files contains my generic PowerShell scripts and any Intune scripts.
+There will be tools in the releases as ZIP files that are used for assistance with certain tasks.
