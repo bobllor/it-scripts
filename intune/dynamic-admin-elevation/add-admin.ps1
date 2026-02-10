@@ -15,10 +15,17 @@ function Log{
     $file = "admin-exec.log"
     $scriptName = $PSCommandPath.split("\")[-1]
 
+    $defaultPath = "C:\ProgramData\AppLogs"
+
     try{
         .\log.ps1 "$file" "$scriptName" "$Out" 
     }catch{
-        echo "$Out"
+        if(!(test-path $defaultPath)){
+            mkdir "$defaultPath"
+        }
+        $date = (get-date -format "yyyy-MM-dd HH:mm:ss")
+
+        echo "[$date | $scriptName] $Out" | out-file "$defaultPath/$file" -append
     }
 }
 
