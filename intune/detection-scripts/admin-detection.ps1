@@ -5,6 +5,9 @@
 
     .AUTHOR
     Tri Nguyen
+
+    .NOTES
+    This is a dynamic script and must be ran with the user logged in.
 #>
 
 $user = (get-ciminstance -class win32_computersystem).username
